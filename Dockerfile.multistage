@@ -1,0 +1,9 @@
+FROM alpine:latest AS builder
+RUN mkdir -p /app
+RUN echo "Multi-Stage Containers Technologies" > /app/index.html
+
+FROM nginx:latest
+LABEL MAINTAINER="thiago.mpereira@aluno.impacta.edu.br"
+COPY --from=builder /app/index.html /usr/share/nginx/html/index.html
+EXPOSE 80
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
